@@ -2,6 +2,10 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import spotRoutes from "./routes/spotRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 const app = express();
 
@@ -11,5 +15,9 @@ app.use(express.json());
 // ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/spots", spotRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/payments", paymentRoutes);
 
 export default app;

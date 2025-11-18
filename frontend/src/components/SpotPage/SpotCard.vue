@@ -1,6 +1,8 @@
 <template>
   <div class="spot-card">
-    <img :src="spot.img" alt="spot" class="spot-img" />
+    <div class="spot-img-wrapper">
+      <img :src="spot.img" alt="spot" class="spot-img" />
+    </div>
 
     <div class="spot-details">
       <h3>{{ spot.name }}</h3>
@@ -40,8 +42,8 @@ defineProps({
   align-items: center;
 }
 .spot-img {
-  width: 180px;
-  height: 130px;
+  width: 250px;
+  height: 220px;
   object-fit: cover;
 }
 
@@ -84,9 +86,15 @@ defineProps({
     max-width: 100%;
   }
 
+  .spot-img-wrapper {
+    width: 100%;
+    height: 200px;
+  }
+
   .spot-img {
     width: 100%;
-    height: 180px;
+    height: 100%;
+    object-fit: cover;
   }
 
   .spot-price {
