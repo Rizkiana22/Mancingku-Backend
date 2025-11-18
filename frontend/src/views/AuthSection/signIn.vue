@@ -48,7 +48,7 @@ async function loginUser() {
   }
 
   try {
-    const res = await axios.post(`${api}/api/login`, {
+    const res = await axios.post(`${api}/api/auth/login`, {
       email: email.value,
       password: password.value
     });

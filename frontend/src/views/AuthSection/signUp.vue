@@ -60,7 +60,7 @@ async function registerUser() {
   }
 
   try {
-    const res = await axios.post(`${api}/api/register`, {
+    const res = await axios.post(`${api}/api/auth/register`, {
       email: email.value,
       password: password.value
     });
