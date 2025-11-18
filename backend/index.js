@@ -1,12 +1,10 @@
-const express = require("express");
-const cors = require("cors");
-const app = express();
+import dotenv from "dotenv";
+dotenv.config();
 
-app.use(cors());
-app.use(express.json());
+import app from "./app.js";
 
-// ROUTES
-app.use("/api", require("./routes/authRoutes"));
-app.use("/api/user", require("./routes/userRoutes"));
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000, () => console.log("Server berjalan di port 3000"));
+app.listen(PORT, () => {
+    console.log(`🚀 Server berjalan di port ${PORT}`);
+});

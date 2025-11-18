@@ -1,12 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const authController = require("../controllers/authController");
+import { Router } from "express";
+import { register, login } from "../controllers/authController.js";
 
-//route register user baru
-router.post("/register", authController.register);
+const router = Router();
 
-//route lgoin user
-router.post("/login", authController.login);
+router.post("/register", register);
+router.post("/login", login);
 
-//export route agar bisa dipakai di index.js
-module.exports = router;
+export default router;

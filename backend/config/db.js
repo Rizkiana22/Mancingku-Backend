@@ -1,10 +1,13 @@
-const mysql = require("mysql2");
-//koneksi mysql
+import dotenv from "dotenv";
+dotenv.config();
+
+import mysql from "mysql2";
+
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "mancingkubaru"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 db.connect(err => {
@@ -12,7 +15,7 @@ db.connect(err => {
         console.log("gagal connect ke database", err);
         return;
     }
-    console.log("mysql terhubung....");
+    console.log("mysql terhubung...");
 });
 
-module.exports = db;
+export default db;

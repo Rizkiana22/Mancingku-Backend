@@ -1,12 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const userController = require("../controllers/userController");
+import { Router } from "express";
+import { getUser, updateUser } from "../controllers/userController.js";
 
-//ambil user berdasarkan id
-router.get("/:id", userController.getUser);
+const router = Router();
 
-//update user profil
-router.put("/:id", userController.updateUser);
+router.get("/:id", getUser);
+router.put("/:id", updateUser);
 
-//export router agar bisa dipakai di index.js
-module.exports = router;
+export default router;
