@@ -1,7 +1,7 @@
 <template>
   <div class="spot-card">
     <div class="spot-img-wrapper">
-      <img :src="spot.img" alt="spot" class="spot-img" />
+      <img :src="`/images/spots/${spot.image}`" class="spot-img" />
     </div>
 
     <div class="spot-details">
@@ -30,6 +30,7 @@
 defineProps({
   spot: Object
 })
+
 </script>
 
 <style scoped>

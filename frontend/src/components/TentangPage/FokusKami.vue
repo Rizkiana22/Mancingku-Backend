@@ -4,17 +4,17 @@
 
     <div class="fokus-container">
       <div class="fokus-item">
-        <img src="/src/assets/booking.png" alt="Booking Online" />
+        <img src="/src/assets/Icon/booking.png" alt="Booking Online" />
         <h3>Booking Online</h3>
       </div>
 
       <div class="fokus-item">
-        <img src="/src/assets/fishing-tool.png" alt="Informasi Joran" />
+        <img src="/src/assets/Icon/fishing-tool.png" alt="Informasi Joran" />
         <h3>Informasi Joran</h3>
       </div>
 
       <div class="fokus-item">
-        <img src="/src/assets/fishing.png" alt="Informasi Umpan" />
+        <img src="/src/assets/Icon/fishing.png" alt="Informasi Umpan" />
         <h3>Informasi Umpan</h3>
       </div>
     </div>

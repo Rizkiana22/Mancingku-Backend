@@ -30,9 +30,9 @@
 
 <script>
   import EquipmentCard from "@/components/PerlengkapanPage/EquipmentCard.vue";
-  import spinningImg from "@/assets/spinning.png";
-  import baitcastImg from "@/assets/casting.png";
-  import teleskopikImg from "@/assets/teleskopik.png";
+  import spinningImg from "@/assets/Perlengkapan/Pancingan/spinning.png";
+  import baitcastImg from "@/assets/Perlengkapan/Pancingan/casting.png";
+  import teleskopikImg from "@/assets/Perlengkapan/Pancingan/teleskopik.png";
 
   export default {
     name: "EquipmentView",

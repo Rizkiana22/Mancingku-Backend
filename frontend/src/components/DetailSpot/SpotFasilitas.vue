@@ -3,32 +3,51 @@
     <div class="left">
       <h4>Fasilitas</h4>
       <div class="fasilitas-grid">
-        <div v-for="(item, index) in spot.fasilitas" :key="index" class="fasilitas-item">
-          <img :src="item.icon" alt="icon" class="icon" />
-          <span>{{ item.nama }}</span>
+        <div
+          v-for="(item, index) in spot.fasilitas || []"
+          :key="index"
+          class="fasilitas-item"
+        >
+          <img :src="item.icon || '/default-icon.png'" alt="icon" class="icon" />
+          <span>{{ item.nama || '-' }}</span>
         </div>
       </div>
     </div>
 
     <div class="right">
       <h4>JAM OPERASIONAL :</h4>
-      <p>{{ spot.jam_operasional }}</p>
+      <p>{{ spot.jam_operasional || 'Belum tersedia' }}</p>
+
       <div class="harga-button-group">
         <div class="harga-info">
-          <p>harga per jam<br><b>Rp {{ spot.harga.toLocaleString() }}</b></p>
+          <p>
+            harga per jam<br>
+            <b>Rp {{ spot.harga?.toLocaleString() || 'N/A' }}</b>
+          </p>
         </div>
-        <router-link :to="`/bookingpage/${spot.id}?slug=${spot.slug}`" class="btn-pesan">Pesan Sekarang</router-link>
+
+        <router-link
+          :to="`/bookingpage/${spot.id || 0}?slug=${spot.slug || ''}`"
+          class="btn-pesan"
+        >
+          Pesan Sekarang
+        </router-link>
       </div>
-      <p class="kursi">Tersisa 5 kursi!</p>
+
+      <p class="kursi">Tersisa {{ spot.kursi || '-' }} kursi!</p>
     </div>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  spot: Object
+  spot: {
+    type: Object,
+    default: () => ({})
+  }
 })
 </script>
+
 
 <style scoped>
   

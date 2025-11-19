@@ -27,9 +27,9 @@
 <script setup>
 import { ref } from 'vue'
 
-import img1 from '@/assets/Pemancingan1.jpg'
-import img2 from '@/assets/Pemancingan2.jpg'
-import img3 from '@/assets/Pemancingan3.jpg'
+import img1 from '@/assets/spot/Pemancingan1.jpg'
+import img2 from '@/assets/spot/Pemancingan2.jpg'
+import img3 from '@/assets/spot/Pemancingan3.jpg'
 
 const slides = [
   { src: img1, alt: 'Iklan 1' },

@@ -23,8 +23,8 @@
 
 <script>
   import BaitCard from "@/components/PerlengkapanPage/BaitCard.vue";
-  import cacingImg from "@/assets/cacing.png";
-  import krotoImg from "@/assets/kroto.jpg";
+  import cacingImg from "@/assets/Perlengkapan/Umpan/cacing.png";
+  import krotoImg from "@/assets/Perlengkapan/Umpan/kroto.jpg";
 
   export default {
     name: "BaitView",
