@@ -10,8 +10,8 @@ export const createReview = (req, res) => {
 
     Spot.updateRating(spot_id, (err2) => {
       if (err2) return res.status(500).json({ message: "rating update error", error: err2});
-       res.json({ message: "Review added & rating updated" });
-    });
+       res.json({ message: "Review added" });
+    })
    
   });
 };

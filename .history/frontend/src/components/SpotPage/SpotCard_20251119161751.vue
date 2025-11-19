@@ -36,7 +36,7 @@ const props = defineProps({
 
 const stars = computed(() => {
   const rating = Math.round(props.spot.rating)
-  return "⭐️".repeat(rating) + "☆".repeat(5-rating)
+  return "⭐️".repeat(rating) + "⭐️".repeat(5-rating)
 })
 
 </script>

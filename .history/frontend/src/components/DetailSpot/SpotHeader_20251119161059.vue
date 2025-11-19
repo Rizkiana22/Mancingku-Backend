@@ -7,7 +7,7 @@
 
     <!-- SPOT INFO -->
     <div class="spot-info">
-      <h1>{{ spot.name }}</h1>
+      <h2>{{ spot.name }}</h2>
 
       <p><strong>Kapasitas:</strong> {{ spot.capacity }} kursi</p>
       <p class="alamat">📍 {{ spot.address }}</p>
@@ -25,7 +25,7 @@
             <strong>{{ review.user_name }}</strong> — ⭐ {{ review.rating }}
           </p>
           <p class="comment">{{ review.comment }}</p>
-        </div>
+       
 
         <!-- Lihat Semua -->
         <router-link :to="`/comment/${spot.id}`">
@@ -39,6 +39,7 @@
           <button class="btn-comment">Lihat semua</button>
         </router-link>
     </div>
+     </div>
   </div>
 </template>
 
@@ -71,9 +72,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
 /* Bagian header utama */
 .spot-header {
   display: flex;

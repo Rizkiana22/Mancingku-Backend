@@ -11,19 +11,7 @@ const Spot = {
 
   getById: (id, callback) => {
   db.query("SELECT * FROM spots WHERE id = ?", [id], callback);
-  },
-
-
-updateRating: (spot_id, callback) => {
-  db.query(
-    `
-    UPDATE spots 
-    SET rating = (
-      SELECT AVG(rating) FROM reviews WHERE spot_id = ?
-    )
-    WHERE id = ?
-    `, [spot_id, spot_id], callback
-  );
-}
+  }
 };
+
 export default Spot;

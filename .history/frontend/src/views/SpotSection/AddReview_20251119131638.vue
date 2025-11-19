@@ -1,69 +1,26 @@
 <template>
   <div class="add-review-page">
     <!-- Tombol Kembali -->
-    <router-link :to="`/comment/${spotId}`" class="btn-back">←</router-link>
+    <router-link :to="`/comment/${$route.params.id}`" class="btn-back">←</router-link>
+
+
 
     <h2>Tulis Ulasan</h2>
     <p>Bagikan pengalamanmu di tempat pemancingan ini</p>
 
-    <form class="review-form" @submit.prevent="submitReview">
-      
+    <form class="review-form">
       <label>Rating</label>
-      <select v-model="rating" required>
-        <option disabled value="">Pilih rating</option>
+      <select>
+        <option disabled selected>Pilih rating</option>
         <option v-for="r in [1,2,3,4,5]" :key="r">{{ r }}</option>
       </select>
 
       <label>Komentar</label>
-      <textarea v-model="comment" rows="4" placeholder="Tulis ulasanmu di sini" required></textarea>
-
-      <button type="submit" class="btn-submit">Kirim Ulasan</button>
+      <textarea rows="4" placeholder="Tulis ulasanmu di sini"></textarea>
+      <button type="button" class="btn-submit">Kirim Ulasan</button>
     </form>
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import axios from 'axios'
-import { useRoute, useRouter } from 'vue-router'
-
-const route = useRoute()
-const router = useRouter()
-
-// Ambil spot id dari URL
-const spotId = route.params.id
-
-// State form
-const rating = ref('')
-const comment = ref('')
-
-// User ID (misal Login sudah simpan user di localStorage)
-const user = JSON.parse(localStorage.getItem('user')) || null
-const userId = user?.id || null 
-
-const submitReview = async () => {
-  if(!userId){
-    alert("Silahkan login untuk menambahkan komentar!");
-    router.push("/Signin");
-  return;
-  }
-  try {
-    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/reviews`, {
-      user_id: userId,
-      spot_id: spotId,
-      rating: rating.value,
-      comment: comment.value
-    })
-
-    alert("Ulasan berhasil ditambahkan!")
-    router.push(`/comment/${spotId}`)
-    
-  } catch (err) {
-    console.error("Gagal mengirim review:", err)
-    alert("Gagal mengirim ulasan.")
-  }
-}
-</script>
 
 <style scoped>
 .add-review-page {

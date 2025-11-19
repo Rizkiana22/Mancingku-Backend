@@ -39,14 +39,9 @@ const comment = ref('')
 
 // User ID (misal Login sudah simpan user di localStorage)
 const user = JSON.parse(localStorage.getItem('user')) || null
-const userId = user?.id || null 
+const userId = user?.id || 1   // fallback ke user #1 jika belum ada login
 
 const submitReview = async () => {
-  if(!userId){
-    alert("Silahkan login untuk menambahkan komentar!");
-    router.push("/Signin");
-  return;
-  }
   try {
     const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/reviews`, {
       user_id: userId,

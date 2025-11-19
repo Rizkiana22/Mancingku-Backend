@@ -44,7 +44,6 @@ const userId = user?.id || null
 const submitReview = async () => {
   if(!userId){
     alert("Silahkan login untuk menambahkan komentar!");
-    router.push("/Signin");
   return;
   }
   try {

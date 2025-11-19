@@ -2,6 +2,7 @@
   <div class="detail-spot">
     <div v-if="loading" class="loading">Loading...</div>
     <div v-else>
+      <h1>TeSSSSS</h1>
       <SpotHeader :spot="spot" />
       <SpotFasilitas :spot="spot" />
       

@@ -23,7 +23,7 @@
       <div v-if="reviews.length">
         <div v-for="review in reviews" :key="review.id" class="review-card">
           <p class="user">
-            <strong>{{ review.user_name }}</strong> — ⭐ {{ review.rating }}
+            <strong>User #{{ review.user_id }}</strong> — ⭐ {{ review.rating }}
           </p>
           <p class="comment">{{ review.comment }}</p>
         </div>
@@ -56,7 +56,7 @@ onMounted(async () => {
 
     // Ambil review dari backend
     const reviewRes = await axios.get(
-       `${import.meta.env.VITE_API_URL}/api/reviews/${id}`
+      `${import.meta.env.VITE_API_URL}/reviews/${id}`
     )
     reviews.value = reviewRes.data
 

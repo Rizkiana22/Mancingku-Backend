@@ -13,21 +13,14 @@ const Review = {
     );
   },
 
-getBySpot: (spotId, callback) => {
-  db.query(
-    `
-    SELECT 
-      reviews.*, 
-      SUBSTRING_INDEX(users.email, '@', 1) AS user_name
-    FROM reviews
-    JOIN users ON reviews.user_id = users.id
-    WHERE reviews.spot_id = ?
-    ORDER BY reviews.created_at DESC
-    `,
-    [spotId],
-    callback
-  );
-},
+  getBySpot: (spotId, callback) => {
+    db.query(
+      `SELECT * FROM reviews WHERE spot_id = ? ORDER BY created_at DESC`,
+      [spotId],
+      callback
+    );
+  },
+
   getAverageRating: (spot_id, callback) => {
     db.query(
       `SELECT AVG(rating) AS avg_rating FROM reviews WHERE spot_id = ?`,

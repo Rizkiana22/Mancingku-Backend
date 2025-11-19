@@ -7,7 +7,7 @@
 
     <!-- SPOT INFO -->
     <div class="spot-info">
-      <h1>{{ spot.name }}</h1>
+      <h2>{{ spot.name }}</h2>
 
       <p><strong>Kapasitas:</strong> {{ spot.capacity }} kursi</p>
       <p class="alamat">📍 {{ spot.address }}</p>
@@ -71,9 +71,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
 /* Bagian header utama */
 .spot-header {
   display: flex;

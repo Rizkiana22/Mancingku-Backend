@@ -71,9 +71,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
 /* Bagian header utama */
 .spot-header {
   display: flex;

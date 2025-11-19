@@ -7,7 +7,7 @@
 
     <!-- SPOT INFO -->
     <div class="spot-info">
-      <h1>{{ spot.name }}</h1>
+      <h2>{{ spot.name }}</h2>
 
       <p><strong>Kapasitas:</strong> {{ spot.capacity }} kursi</p>
       <p class="alamat">📍 {{ spot.address }}</p>
@@ -35,15 +35,12 @@
 
       <!-- DEFAULT JIKA BELUM ADA REVIEW -->
       <p v-else class="no-review">Belum ada ulasan untuk tempat ini.</p>
-        <router-link :to="`/comment/${spot.id}`">
-          <button class="btn-comment">Lihat semua</button>
-        </router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, compu } from "vue";
 import axios from "axios";
 
 const props = defineProps({
@@ -71,9 +68,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
 /* Bagian header utama */
 .spot-header {
   display: flex;
@@ -119,16 +113,6 @@ a {
 
 /* Ulasan Pengunjung */
 .ulasan {
-  background-color: #18647b !important;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  max-height: 250px;
-  overflow-y: auto;
-  color: white;
-}
-
-.no-review {
   background-color: #18647b !important;
   padding: 15px;
   border-radius: 10px;

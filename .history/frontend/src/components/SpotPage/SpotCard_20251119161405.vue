@@ -10,7 +10,7 @@
 
       <div class="rating">
         <span>{{ spot.rating }}</span>
-        <span class="stars">{{ stars }}</span>
+        <span class="stars">⭐️⭐️⭐️⭐️⭐️</span>
       </div>
       <p><strong>Kapasitas:</strong> {{ spot.capacity }} kursi</p>
       <p class="availability">Tersisa {{ spot.remaining }} kursi!</p>
@@ -27,16 +27,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { START_LOCATION } from 'vue-router';
-
-const props = defineProps({
+defineProps({
   spot: Object
-})
-
-const stars = computed(() => {
-  const rating = Math.round(props.spot.rating)
-  return "⭐️".repeat(rating) + "☆".repeat(5-rating)
 })
 
 </script>

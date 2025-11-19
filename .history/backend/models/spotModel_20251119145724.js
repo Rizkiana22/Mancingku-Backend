@@ -22,7 +22,7 @@ updateRating: (spot_id, callback) => {
       SELECT AVG(rating) FROM reviews WHERE spot_id = ?
     )
     WHERE id = ?
-    `, [spot_id, spot_id], callback
+    `,, [spot_id, spot_id], callback
   );
 }
 };

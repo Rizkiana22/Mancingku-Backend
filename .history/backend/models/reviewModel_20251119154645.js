@@ -16,9 +16,7 @@ const Review = {
 getBySpot: (spotId, callback) => {
   db.query(
     `
-    SELECT 
-      reviews.*, 
-      SUBSTRING_INDEX(users.email, '@', 1) AS user_name
+    SELECT reviews.*, users.name AS user_name
     FROM reviews
     JOIN users ON reviews.user_id = users.id
     WHERE reviews.spot_id = ?
@@ -28,6 +26,7 @@ getBySpot: (spotId, callback) => {
     callback
   );
 },
+
   getAverageRating: (spot_id, callback) => {
     db.query(
       `SELECT AVG(rating) AS avg_rating FROM reviews WHERE spot_id = ?`,

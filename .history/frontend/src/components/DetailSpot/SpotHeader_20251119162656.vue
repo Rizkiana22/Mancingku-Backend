@@ -176,6 +176,7 @@ a {
   display: block;
   margin-left: auto;
   margin-top: 10px;
+  text-decoration: none;
 }
 
 .btn-comment:hover {
