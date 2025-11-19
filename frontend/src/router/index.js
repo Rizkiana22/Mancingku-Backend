@@ -10,9 +10,9 @@ import signUp from '@/views/AuthSection/signUp.vue'
 import Profile from '@/views/ProfilSection/Profile.vue'
 import DetailSpot from '@/views/SpotSection/DetailSpot.vue'
 import BookingPage from '@/views/BookingSection/BookingPage.vue'
-import BlogDetail from '@/views/BerandaSection/BlogDetail.vue'
 import PaymentPage from '@/views/PaymentSection/PaymentPage.vue'
 import AddReview from '@/views/SpotSection/AddReview.vue'
+
 const routes = [
   { path: '/', name: 'Indeks', component: Indeks },
   { path: '/Beranda', name: 'Beranda', component: Beranda },
@@ -26,10 +26,10 @@ const routes = [
   { path: '/signUp', name: 'signUp', component: signUp, meta: { title: 'Daftar | Mancingku' } },
   { path: '/Profile', name: 'Profile', component: Profile, meta: { title: 'Profil | Mancingku' } },
   { path: '/BookingPage/:slug', name: 'BookingPage', component: BookingPage, meta: { title: 'Booking | Mancingku' } },
-  { path: '/blog/:slug', name: 'BlogDetail', component: BlogDetail, meta: { title: 'Artikel | Mancingku' } },
+  { path: "/blog", name: "BlogList", component: () => import("@/views/BerandaSection/BlogList.vue" ) },
+  { path: "/blog/:slug", name: "BlogDetail", component: () => import("@/views/BerandaSection/BlogDetail.vue" ) },
   { path: '/payment/:slug', name: 'PaymentPage', component: () => import('@/views/PaymentSection/PaymentPage.vue'), meta: { title: 'Pembayaran | Mancingku' } },
   { path: '/comment/add/:id', name: 'AddReview', component: AddReview, meta: { title: 'Tambah Ulasan | Mancingku' } },
-
 ]
 
 const router = createRouter({

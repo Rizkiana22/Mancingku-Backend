@@ -1,60 +1,55 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+const latestPosts = ref([]);
+
+onMounted(async () => {
+  try {
+    const api = import.meta.env.VITE_API_URL;
+    const res = await axios.get(`${api}/api/blog`);
+    latestPosts.value = res.data.slice(0, 3);
+  } catch (err) {
+    console.error("Gagal ambil blog:", err);
+  }
+});
+
+// ringkas konten jadi 20 kata
+function summarize(html) {
+  const text = html.replace(/<[^>]*>/g, " ");
+  return text.split(" ").slice(0, 20).join(" ") + "...";
+}
+
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+</script>
+
 <template>
   <div class="blog-section">
     <h2>Blog & Artikel Terbaru</h2>
+
     <div class="blog-cards">
-
-        <!-- Blog 1 -->
-        <router-link to="/blog/tips-mancing-pemula" class="blog-card">
+      <router-link
+        v-for="post in latestPosts"
+        :key="post.id"
+        :to="`/blog/${post.slug}`"
+        class="blog-card"
+      >
         <div class="blog-image">
-          <img src="https://hellscanyon.tours/wp-content/uploads/2023/01/RiverAdventuresInc-214207-Pieces-Fishing-Equipment-blogbanner1.jpg" alt="Tips Memancing" />
+          <img :src="`/images/blog/${post.image}`" :alt="post.title" />
         </div>
-        <div class="blog-content">
-          <h3>Tips Memancing untuk Pemula</h3>
-          <p>
-            Panduan lengkap bagi pemula yang ingin memulai hobi memancing. Mulai dari
-            pemilihan alat hingga teknik dasar.
-          </p>
-          <div class="blog-meta">
-            <span>5 Menit Baca</span>
-            <span>1 Nov 2025</span>
-          </div>
-        </div>
-      </router-link>
 
-      <!-- Blog 2 -->
-      <router-link to="/blog/spot-mancing-jabar" class="blog-card">
-        <div class="blog-image">
-          <img
-            src="https://www.kabarmancing.com/wp-content/uploads/2014/05/114.jpg" alt="Spot Favorit"/>
-        </div>
         <div class="blog-content">
-          <h3>5 Spot Mancing Favorit di Jawa Barat</h3>
-          <p>
-            Temukan lokasi memancing terbaik di Jawa Barat dengan pemandangan
-            indah dan ikan melimpah.
-          </p>
-          <div class="blog-meta">
-            <span>4 Menit Baca</span>
-            <span>30 Okt 2025</span>
-          </div>
-        </div>
-      </router-link>
+          <h3>{{ post.title }}</h3>
+          <p>{{ summarize(post.content) }}</p>
 
-      <!-- Blog 3 -->
-      <router-link to="/blog/umpan-jitu-ikan-mas" class="blog-card">
-        <div class="blog-image">
-          <img
-            src="https://id-test-11.slatic.net/p/cbf927cf066519fa7e64f5fe04d334a4.jpg"alt="Umpan Terbaik"/>
-        </div>
-        <div class="blog-content">
-          <h3>Rahasia Umpan Jitu untuk Ikan Mas</h3>
-          <p>
-            Berbagai racikan umpan khusus yang terbukti ampuh untuk memancing
-            ikan mas di kolam maupun waduk.
-          </p>
           <div class="blog-meta">
-            <span>6 Menit Baca</span>
-            <span>28 Okt 2025</span>
+            <span>{{ formatDate(post.created_at) }}</span>
           </div>
         </div>
       </router-link>
@@ -63,7 +58,6 @@
 </template>
 
 <style scoped>
-
 .blog-section {
   max-width: 1200px;
   margin: 100px auto 10px;

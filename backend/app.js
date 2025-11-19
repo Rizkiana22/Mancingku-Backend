@@ -8,6 +8,7 @@ import bookingRoutes from "./routes/bookingRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import alatRoutes from "./routes/alatRoutes.js";
 import umpanRoutes from "./routes/umpanRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
 
 const app = express();
 
@@ -23,5 +24,6 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/alat", alatRoutes);
 app.use("/api/umpan", umpanRoutes);
+app.use("/api/blog", blogRoutes);
 
 export default app;
