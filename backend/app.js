@@ -6,6 +6,8 @@ import spotRoutes from "./routes/spotRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import alatRoutes from "./routes/alatRoutes.js";
+import umpanRoutes from "./routes/umpanRoutes.js";
 
 const app = express();
 
@@ -19,5 +21,7 @@ app.use("/api/spots", spotRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/alat", alatRoutes);
+app.use("/api/umpan", umpanRoutes);
 
 export default app;
