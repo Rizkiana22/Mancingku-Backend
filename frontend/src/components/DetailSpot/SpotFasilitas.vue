@@ -8,12 +8,14 @@
           :key="index"
           class="fasilitas-item"
         >
-          <img :src="item.icon || '/default-icon.png'" alt="icon" class="icon" />
+          <img :src="`/images/facilities/${item.icon}`" alt="icon" class="icon" />
+          <!-- <img :src="`/images/facilities/${item.icon}`" class="icon" /> -->
           <span>{{ item.nama || '-' }}</span>
         </div>
       </div>
     </div>
 
+    
     <div class="right">
       <h4>JAM OPERASIONAL :</h4>
       <p>{{ spot.jam_operasional || 'Belum tersedia' }}</p>
@@ -89,9 +91,10 @@ defineProps({
 }
 
 .icon {
+  
   width: 50px;
   height: 50px;
-  filter: brightness(2) invert(0);
+  filter: brightness(0) invert(0);
 }
 
 /* Kolom kanan */

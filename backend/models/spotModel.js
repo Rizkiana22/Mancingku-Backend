@@ -24,6 +24,17 @@ updateRating: (spot_id, callback) => {
     WHERE id = ?
     `, [spot_id, spot_id], callback
   );
+},
+
+getFacilities: (spotId, callback) => {
+    const sql = `
+      SELECT f.id, f.nama, f.icon 
+      FROM spot_facilities sf
+      JOIN facilities f ON f.id = sf.facility_id
+      WHERE sf.spot_id = ?
+    `;
+    db.query(sql, [spotId], callback);
 }
 };
+
 export default Spot;

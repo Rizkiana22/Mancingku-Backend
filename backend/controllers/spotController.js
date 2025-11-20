@@ -22,6 +22,17 @@ export const getSpotBySlug = (req, res) => {
   Spot.getBySlug(req.params.slug, (err, results) => {
     if (err) return res.status(500).json({ message: "DB error" });
     if (results.length === 0) return res.status(404).json({ message: "Spot not found" });
-    res.json(results[0]);
+
+    const spot = results[0];
+
+    // Query fasilitas berdasarkan ID spot
+    Spot.getFacilities(spot.id, (err2, fasilitas) => {
+      if (err2) return res.status(500).json({ message: "Fasilitas DB error" });
+
+      // Masukkan fasilitas ke objek spot
+      spot.fasilitas = fasilitas;
+
+      res.json(spot);
+    });
   });
 };
