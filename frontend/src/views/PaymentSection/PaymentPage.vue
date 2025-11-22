@@ -148,7 +148,7 @@ const route = useRoute();
 const router = useRouter();
 
 const booking = ref(null);
-const subtotal = ref(Number(route.query.totalBiaya) || 0);
+const subtotal = ref(Number(route.query.total_amount) || 0);
 const pajak = 2500;
 const total = ref(subtotal.value + pajak);
 

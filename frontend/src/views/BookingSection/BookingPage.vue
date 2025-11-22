@@ -154,7 +154,7 @@ const pesanTiket = async () => {
       query: {
         slug: route.params.slug,
         tanggal: form.value.tanggal,
-        totalBiaya: form.value.totalBiaya,
+        total_amount: totalBiaya.value,
         jamMulai: sessions.value.find(s => s.id === form.value.session_id).start_time,
         durasi: sessions.value.find(s => s.id === form.value.session_id).duration
       }
