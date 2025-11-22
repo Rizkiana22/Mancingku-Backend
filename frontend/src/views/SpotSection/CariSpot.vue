@@ -4,7 +4,7 @@
 
     <section class="search-section">
       <h1>Cari Spot Pemancingan</h1>
-      <SearchBar v-model="search" />
+      <SearchBar v-model="search" @apply-filter="setFilter" />
     </section>
 
     <section class="spot-list">
@@ -27,20 +27,49 @@ import SpotCard from "@/components/SpotPage/SpotCard.vue";
 const spots = ref([]);
 const search = ref("");
 
+const filter = ref({
+  minPrice: null,
+  maxPrice: null,
+  rating: 0
+})
+
+const setFilter = (f) => {
+  filter.value = f
+}
+
 onMounted(async () => {
   try {
     const api = import.meta.env.VITE_API_URL;
     const res = await axios.get(`${api}/api/spots`);
-    spots.value = res.data;
+
+    // 🔥 Ambil harga next-session untuk setiap spot
+    const spotsWithPrice = await Promise.all(
+      res.data.map(async sp => {
+        try {
+          const session = await axios.get(`${api}/api/sessions/${sp.id}/next-session`);
+          return { ...sp, nextPrice: session.data?.price ?? null };
+        } catch {
+          return { ...sp, nextPrice: null };
+        }
+      })
+    );
+
+    spots.value = spotsWithPrice;
   } catch (err) {
     console.error("Gagal mengambil data spots:", err);
   }
 });
 
 const filteredSpots = computed(() => {
-  return spots.value.filter(s =>
-    s.address.toLowerCase().includes(search.value.toLowerCase())
-  );
+  return spots.value.filter(s => {
+    const matchAddress = s.address.toLowerCase().includes(search.value.toLowerCase());
+
+    const matchMin = filter.value.minPrice ? s.nextPrice >= filter.value.minPrice : true;
+    const matchMax = filter.value.maxPrice ? s.nextPrice <= filter.value.maxPrice : true;
+    const matchRating = filter.value.rating ? s.rating >= filter.value.rating : true;
+
+    return matchAddress && matchMin && matchMax && matchRating;
+  });
 });
 </script>
 

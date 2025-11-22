@@ -5,7 +5,7 @@
         <span class="icon">📍</span>
         <input
           type="text"
-          placeholder="Nama"
+          placeholder="Lokasi"
           :value="modelValue"
           @input="$emit('update:modelValue', $event.target.value)"
         />
@@ -18,9 +18,9 @@
       <div v-if="showFilter" class="filter-panel">
         <h3>Batas Harga</h3>
         <div class="price-range">
-          <input type="number" placeholder="Min" />
-          <span>—</span>
-          <input type="number" placeholder="Max" />
+         <input type="number" placeholder="Min" v-model="minPrice" />
+         <span>—</span>
+         <input type="number" placeholder="Max" v-model="maxPrice" />
         </div>
 
         <h3>Rating</h3>
@@ -38,7 +38,9 @@
         </div>
 
         <p>Penilaian: {{ rating }}</p>
-        <button class="btn-apply">Terapkan</button>
+        <button class="btn-apply" @click="$emit('apply-filter', { minPrice, maxPrice, rating })">
+          Terapkan
+        </button>
         </div>
 
     </div>
@@ -55,8 +57,10 @@ import { ref } from 'vue'
 defineProps({
   modelValue: String
 })
-defineEmits(['update:modelValue'])
+defineEmits(["update:modelValue", "apply-filter"])
 
+const minPrice = ref(null)
+const maxPrice = ref(null)
 const showFilter = ref(false)
 const rating = ref(0)
 </script>
