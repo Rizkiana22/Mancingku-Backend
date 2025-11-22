@@ -3,7 +3,7 @@
     <h2 class="title">Pembayaran Tiket Mancing</h2>
 
     <div class="btn-back">
-     <router-link :to="{ path: `/BookingPage/${route.params.slug}`, query: route.query }">
+     <router-link :to="{ path: `/BookingPage/${route.query.spotId}/${route.query.slug}`}">
         <button>←</button>
       </router-link>
     </div>
@@ -33,12 +33,12 @@
         <div class="summary-item">
           <div>
             <p>Subtotal Pesanan</p>
-            <small>Durasi: {{ durasi }} jam</small><br />
-            <small>Nama: {{ nama }}</small
+            <small>Nama Tempat: {{ nama }}</small
             ><br />
-            <small>Tanggal: {{ tanggal }}</small
+            <small>tanggal: {{ formatTanggal(tanggal) }}</small
             ><br />
-            <small>Jam Mulai: {{ jamMulai }}</small>
+            <small>Sesi: {{ sessionName }}</small><br />
+            <small>Jam Mulai: {{formatTime(jamMulai)}} - {{ formatTime(jamSelesai) }}</small>
           </div>
           <span>Rp{{ formatNumber(subtotal) }}</span>
         </div>
@@ -80,7 +80,7 @@
     <div v-if="showBCAModal" class="modal-overlay" @click.self="closeModal">
       <div class="BCA-content">
         <h3>Pembayaran Melalui BCA</h3>
-        <P>Total Pembayaran:</P>
+        <p>Total Pembayaran:</p>
         <h3>Rp {{ formatNumber(total) }}</h3>
 
         <div class="va-box">
@@ -100,7 +100,7 @@
     <div v-if="showMandiriModal" class="modal-overlay" @click.self="closeModal">
       <div class="Mandiri-content">
         <h3>Pembayaran Melalui Mandiri</h3>
-        <P>Total Pembayaran:</P>
+        <p>Total Pembayaran:</p>
         <h3>Rp {{ formatNumber(total) }}</h3>
 
         <div class="va-box">
@@ -120,7 +120,7 @@
     <div v-if="showDanaModal" class="modal-overlay" @click.self="closeModal">
       <div class="Dana-content">
         <h3>Pembayaran Melalui Dana</h3>
-        <P>Total Pembayaran:</P>
+        <p>Total Pembayaran:</p>
         <h3>Rp {{ formatNumber(total_amount) }}</h3>
 
         <div class="No-box">
@@ -166,10 +166,11 @@ onMounted(async () => {
 });
 
 // Query untuk tampilan
-const nama = route.query.slug || "-";
+const nama = route.query.namaSpot || "-";
 const tanggal = route.query.tanggal || "-";
 const jamMulai = route.query.jamMulai || "-";
-const durasi = Number(route.query.durasi) || 1;
+const jamSelesai = route.query.jamSelesai || "-";
+const sessionName = route.query.sessionName || "-";
 
 // metode pembayaran
 const methods = [
@@ -207,6 +208,18 @@ const closeModal = () => {
 };
 
 const formatNumber = num => (num ? num.toLocaleString("id-ID") : "0");
+const formatTime = (timeString) => {
+  if (!timeString) return "";
+  return timeString.slice(0, 5);
+};
+const formatTanggal = (tgl) => {
+  const date = new Date(tgl);
+  return date.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+};
 </script>
 
 
@@ -321,6 +334,10 @@ const formatNumber = num => (num ? num.toLocaleString("id-ID") : "0");
   align-items: flex-start;
   margin: 12px 0;
   color: #555;
+}
+
+.summary-item span{
+  padding-top: 15px;
 }
 
 .total {

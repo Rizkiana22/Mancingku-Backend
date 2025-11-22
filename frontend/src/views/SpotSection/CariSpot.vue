@@ -1,7 +1,5 @@
 <template>
   <main class="spot-page">
-    <Navbar />
-
     <section class="search-section">
       <h1>Cari Spot Pemancingan</h1>
       <SearchBar v-model="search" />
@@ -20,7 +18,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
-
 import SearchBar from "@/components/SpotPage/SearchBar.vue";
 import SpotCard from "@/components/SpotPage/SpotCard.vue";
 

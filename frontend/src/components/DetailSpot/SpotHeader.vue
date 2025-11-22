@@ -168,7 +168,10 @@ a {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  margin-left: 120vh;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 12px;
+  display: block;
 }
 
 .btn-comment:hover {
@@ -190,5 +193,21 @@ a {
     width: 90%;
     text-align: center;
   }
+
+  .btn-comment {
+  background-color: #ff8800;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 400;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.btn-comment:hover {
+  background-color: #e57200;
+}
 }
 </style>
