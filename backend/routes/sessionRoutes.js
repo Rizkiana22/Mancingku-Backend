@@ -1,5 +1,5 @@
 import express from "express";
-import { getNextSession, getSessionBySpot , getOperationalHours} from "../controllers/sessionController.js";
+import { getNextSession, getSessionBySpot , getOperationalHours} from "../controllers/SessionController.js";
 
 const router = express.Router();
 

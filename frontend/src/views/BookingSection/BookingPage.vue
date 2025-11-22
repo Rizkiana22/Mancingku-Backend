@@ -3,7 +3,7 @@
     <!-- HEADER -->
     <div class="booking-header">
       <router-link :to="`/spot/${route.params.slug}`" class="btn-back">
-        ←
+      <button>←</button>
       </router-link>
       <h2 class="booking-title">Form Pemesanan Tiket Mancing</h2>
     </div>
@@ -134,7 +134,9 @@ const pesanTiket = async () => {
     alert("Harap pilih tanggal & sesi!");
     return;
   }
-
+  const selectedSession = sessions.value.find(
+  s => Number(s.id) === Number(form.value.session_id)
+  )
   const payload = {
     user_id: Number(localStorage.getItem("userId")),
     spot_id: route.params.spotId,
@@ -153,10 +155,15 @@ const pesanTiket = async () => {
       path: `/payment/${bookingId}`,
       query: {
         slug: route.params.slug,
+        spotId: route.params.spotId,
+        namaSpot: route.params.slug
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, c => c.toUpperCase()),
         tanggal: form.value.tanggal,
         total_amount: totalBiaya.value,
-        jamMulai: sessions.value.find(s => s.id === form.value.session_id).start_time,
-        durasi: sessions.value.find(s => s.id === form.value.session_id).duration
+        sessionName: selectedSession.session_name,
+        jamMulai: selectedSession.start_time,
+        jamSelesai : selectedSession.end_time
       }
     });
 
@@ -194,25 +201,26 @@ const pesanTiket = async () => {
   margin: 0;
 }
 
-/* Tombol back elegan */
+
 .btn-back {
   position: absolute;
   left: 0;
-  background: #0077cc;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  font-size: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  transition: 0.3s;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  margin-bottom: 15px;
 }
-
-.btn-back:hover {
-  background: #005fa3;
+.btn-back button{
+  background: transparent;
+  color:#000000;
+  border: none;
+  font-size: 50px;
+  
+}
+.btn-back button:hover{
+  color: #f79e1b; 
 }
 
 /* Form styling */
@@ -283,17 +291,29 @@ button[type="submit"]:hover {
 }
 
 /* Responsif */
-@media (max-width: 600px) {
+@media (max-width: 579px) {
   .booking-page {
     margin: 20px;
     padding: 1.5rem;
   }
   .booking-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
-  .btn-back {
-    width: 36px;
-    height: 36px;
-  }
+.btn-back {
+  position: relative;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.btn-back button {
+  background: transparent;
+  color: #000000;
+  border: none;
+  font-size: 40px;
+}
+
+.btn-back button:hover{
+  color: #f79e1b; 
+}
 }
 </style>

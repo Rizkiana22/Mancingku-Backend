@@ -28,7 +28,7 @@ const routes = [
   { path: '/BookingPage/:spotId/:slug', name: 'BookingPage', component: BookingPage, meta: { title: 'Booking | Mancingku' } },
   { path: "/blog", name: "BlogList", component: () => import("@/views/BerandaSection/BlogList.vue" ) },
   { path: "/blog/:slug", name: "BlogDetail", component: () => import("@/views/BerandaSection/BlogDetail.vue" ) },
-  { path: '/payment/:slug', name: 'PaymentPage', component: () => import('@/views/PaymentSection/PaymentPage.vue'), meta: { title: 'Pembayaran | Mancingku' } },
+  { path: '/payment/:bookingId', name: 'PaymentPage', component: () => import('@/views/PaymentSection/PaymentPage.vue'), meta: { title: 'Pembayaran | Mancingku' } },
   { path: '/comment/add/:id', name: 'AddReview', component: AddReview, meta: { title: 'Tambah Ulasan | Mancingku' } },
 ]
 
