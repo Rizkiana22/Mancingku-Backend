@@ -32,8 +32,8 @@
         </div>
 
         <button class="btn-pesan" @click="handlePesan">
-  Pesan Sekarang
-</button>
+          Pesan Sekarang
+        </button>
       </div>
 
       <p class="kursi" v-if="nextSession">

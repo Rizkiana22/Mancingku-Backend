@@ -121,7 +121,7 @@
       <div class="Dana-content">
         <h3>Pembayaran Melalui Dana</h3>
         <P>Total Pembayaran:</P>
-        <h3>Rp {{ formatNumber(total) }}</h3>
+        <h3>Rp {{ formatNumber(total_amount) }}</h3>
 
         <div class="No-box">
           <p>Nomor Dana:</p>
@@ -140,48 +140,38 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
 
-const nama = route.query.slug || "-"; 
+const booking = ref(null);
+const subtotal = ref(Number(route.query.totalBiaya) || 0);
+const pajak = 2500;
+const total = ref(subtotal.value + pajak);
+
+onMounted(async () => {
+  try {
+    const res = await axios.get(`/api/payments/booking/${route.params.bookingId}`);
+
+    booking.value = res.data;
+
+    subtotal.value = booking.value.total_amount;
+    total.value = subtotal.value + pajak;
+  } catch (err) {
+    console.error("Gagal memuat booking:", err);
+  }
+});
+
+// Query untuk tampilan
+const nama = route.query.slug || "-";
 const tanggal = route.query.tanggal || "-";
 const jamMulai = route.query.jamMulai || "-";
 const durasi = Number(route.query.durasi) || 1;
-const jumlahOrang = Number(route.query.jumlahOrang) || 1;
-const sewaAlat = route.query.sewaAlat || "tidak";
-const jenisAlat = route.query.jenisAlat || "";
 
-// daftar harga alat
-const daftarAlat = [
-  { nama: "Joran & Reel Spinning", harga: 15000 },
-  { nama: "Joran Bambu Tradisional", harga: 10000 },
-  { nama: "Set Pancing Profesional", harga: 25000 },
-];
-
-// hitung biaya mancing
-const hargaPerJam = 20000;
-let subtotalSpot = hargaPerJam * durasi * jumlahOrang;
-
-// hitung jika sewa alat
-let subtotalAlat = 0;
-if (sewaAlat === "ya" && jenisAlat) {
-  const alat = daftarAlat.find((a) => a.nama === jenisAlat);
-  if (alat) {
-    subtotalAlat = alat.harga * durasi * jumlahOrang;
-  }
-}
-
-// subtotal = spot + alat
-const subtotal = subtotalSpot + subtotalAlat;
-
-// total = subtotal + pajak
-const pajak = 2500;
-const total = subtotal + pajak;
-
-// daftar metode pembayaran
+// metode pembayaran
 const methods = [
   { name: "QRIS", logo: "https://tse1.mm.bing.net/th/id/OIP.SJk3_1NbGUAvZ-bJslHM4wHaC0?pid=Api&P=0&h=180" },
   { name: "BCA", logo: "https://tse2.mm.bing.net/th/id/OIP.SIiH0GXVJKMQl0Lary6_rQHaHa?pid=Api&P=0&h=180" },
@@ -190,40 +180,23 @@ const methods = [
 ];
 
 const selectedMethod = ref(null);
+
 const showQRISModal = ref(false);
 const showBCAModal = ref(false);
 const showMandiriModal = ref(false);
 const showDanaModal = ref(false);
 
-const selectMethod = (method) => {
+const selectMethod = method => {
   selectedMethod.value = method;
 };
 
 const lanjutkanPembayaran = () => {
-  if (!selectedMethod.value) {
-    alert("Silakan pilih metode pembayaran terlebih dahulu!");
-    return;
-  }
+  if (!selectedMethod.value) return alert("Pilih metode pembayaran dulu!");
 
-  if (selectedMethod.value === "QRIS") {
-    showQRISModal.value = true;
-    return;
-  }
-  if (selectedMethod.value === "BCA") {
-    showBCAModal.value = true;
-    return;
-  }
-  if (selectedMethod.value === "Mandiri") {
-    showMandiriModal.value = true;
-    return;
-  }
-  if (selectedMethod.value === "Dana") {
-    showDanaModal.value = true;
-    return;
-  }
-
-  alert(`✅ Pembayaran berhasil melalui ${selectedMethod.value}!`);
-  router.push("/");
+  if (selectedMethod.value === "QRIS") showQRISModal.value = true;
+  if (selectedMethod.value === "BCA") showBCAModal.value = true;
+  if (selectedMethod.value === "Mandiri") showMandiriModal.value = true;
+  if (selectedMethod.value === "Dana") showDanaModal.value = true;
 };
 
 const closeModal = () => {
@@ -233,8 +206,9 @@ const closeModal = () => {
   showDanaModal.value = false;
 };
 
-const formatNumber = (num) => num.toLocaleString("id-ID");
+const formatNumber = num => (num ? num.toLocaleString("id-ID") : "0");
 </script>
+
 
 <style scoped>
 

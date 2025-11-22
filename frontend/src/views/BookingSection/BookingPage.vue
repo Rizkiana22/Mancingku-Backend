@@ -137,25 +137,33 @@ const pesanTiket = async () => {
 
   const payload = {
     user_id: Number(localStorage.getItem("userId")),
-    spot_id: route.params.spotId,   // ← FIX DISINI
+    spot_id: route.params.spotId,
     session_id: form.value.session_id,
     booking_date: form.value.tanggal,
     jumlah_orang: form.value.jumlahOrang,
+    total_amount: totalBiaya.value
   };
 
   try {
-    await axios.post("/api/bookings", payload);
+    const res = await axios.post("/api/bookings", payload);
+
+    const bookingId = res.data.bookingId;  // pastikan controller return ini
 
     router.push({
-      path: `/payment/${route.params.slug}`, // INI BENAR
-      query: { total: totalBiaya.value }
+      path: `/payment/${bookingId}`,
+      query: {
+        slug: route.params.slug,
+        tanggal: form.value.tanggal,
+        totalBiaya: form.value.totalBiaya,
+        jamMulai: sessions.value.find(s => s.id === form.value.session_id).start_time,
+        durasi: sessions.value.find(s => s.id === form.value.session_id).duration
+      }
     });
 
   } catch (error) {
     console.error("Error booking:", error);
   }
 };
-
 </script>
 
 
