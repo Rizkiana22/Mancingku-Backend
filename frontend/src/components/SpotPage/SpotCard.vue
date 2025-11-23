@@ -27,8 +27,9 @@
 
     <div class="spot-price">
       <!-- HARGA PER SESI TERDEKAT -->
-      <p v-if="nextSession">Rp {{ nextSession.price }}</p>
+      <p v-if="spot.nextPrice">Rp {{ spot.nextPrice }}</p>
       <p v-else>Rp ...</p>
+
 
       <router-link :to="`/spot/${spot.slug}`" class="btn-pilih">
         Pilih

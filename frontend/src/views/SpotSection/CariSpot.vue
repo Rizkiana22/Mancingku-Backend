@@ -2,7 +2,11 @@
   <main class="spot-page">
     <section class="search-section">
       <h1>Cari Spot Pemancingan</h1>
-      <SearchBar v-model="search" @apply-filter="setFilter" />
+      <SearchBar v-model="search" 
+      @apply-filter="setFilter" 
+      @reset-filter="resetFilter" 
+      @search-location="getLocationSpots"
+      />
     </section>
 
     <section class="spot-list">
@@ -32,6 +36,14 @@ const filter = ref({
 
 const setFilter = (f) => {
   filter.value = f
+}
+
+const resetFilter = () => {
+  filter.value = {
+    minPrice: null,
+    maxPrice: null,
+    rating: 0
+  }
 }
 
 onMounted(async () => {
@@ -68,6 +80,19 @@ const filteredSpots = computed(() => {
     return matchAddress && matchMin && matchMax && matchRating;
   });
 });
+
+const getLocationSpots = async ({ lat, lon }) => {
+  // request geocoding → ubah koordinat ke nama lokasi untuk mengisi kolom search
+  try {
+    const res = await axios.get(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=id`
+    );
+    const city = res.data.address.city || res.data.address.town || res.data.address.village ||  "";
+    search.value = city.toLowerCase(); // langsung search otomatis
+  } catch {
+    search.value = ""; // fallback jika API gagal
+  }
+};
 </script>
 
 
