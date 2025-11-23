@@ -35,7 +35,7 @@ const Booking = {
           data.spot_id,
           data.session_id,
           data.booking_date,
-          data.jumlah_orang,   // ✔ FIX DISINI
+          data.jumlah_orang,   
           totalAmount
         ],
         (err, result) => {
@@ -47,7 +47,29 @@ const Booking = {
         }
       );
     });
-  }
+  },
+
+ getById: (id, callback) => {
+  const query = `
+    SELECT b.*, s.session_name, s.start_time, s.end_time, sp.name AS spot_name
+    FROM bookings b
+    JOIN sessions s ON b.session_id = s.id
+    JOIN spots sp ON b.spot_id = sp.id
+    WHERE b.id = ?
+    LIMIT 1
+  `;
+  db.query(query, [id], callback);
+},
+
+
+  updateStatus: (bookingId, status, callback) => {
+    const query =  `
+    UPDATE bookings
+    SET status = ?
+    WHERE id = ?
+    `;
+    db.query(query, [status, bookingId], callback);
+  },
 };
 
 export default Booking;

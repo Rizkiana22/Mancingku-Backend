@@ -4,6 +4,6 @@ import { createPayment, getPaymentByBooking } from "../controllers/paymentContro
 const router = express.Router();
 
 router.post("/", createPayment);
-router.get("/booking/:bookingId", getPaymentByBooking);
+router.get("/:bookingId", getPaymentByBooking);
 
 export default router;

@@ -16,3 +16,20 @@ export const getBookingById = (req, res) => {
     res.json(results[0]);
   });
 };
+
+export const updateStatus = (req, res) => {
+  const bookingId = req.params.id;
+
+  Booking.updateStatus(bookingId, "paid", (err, result) => {
+    if (err) {
+      console.error("UPDATE STATUS ERROR:", err);
+      return res.status(500).json({ message: "Gagal update status", err });
+    }
+
+    res.json({
+      message: "Status booking berhasil diupdate menjadi PAID",
+      result
+    });
+  });
+};
+

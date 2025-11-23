@@ -23,7 +23,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/spots", spotRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/reviews", reviewRoutes);
-app.use("/api/payments/:bookingId", paymentRoutes);
+app.use("/api/payments", paymentRoutes);
 app.use("/api/alat", alatRoutes);
 app.use("/api/umpan", umpanRoutes);
 app.use("/api/blog", blogRoutes);

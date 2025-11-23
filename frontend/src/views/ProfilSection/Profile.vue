@@ -105,9 +105,9 @@ const selectedTicket = ref(null);
 
 // === DATA USER ===
 const username = ref("");
-const name = ref("");     // bisa diisi user
+const name = ref("");    
 const email = ref("");
-const phone = ref("");    // bisa diisi user
+const phone = ref("");
 
 // === AMBIL DATA USER DARI LOCALSTORAGE + DATABASE ===
 onMounted(async () => {
@@ -131,12 +131,6 @@ onMounted(async () => {
     console.error("Gagal mengambil data user:", err);
   }
 });
-
-// === DUMMY DATA TIKET ===
-const tickets = ref([
-  { id: 1, spot: "Saung Kemangi", date: "2025-11-05", amount: 2, price: 50000 },
-  { id: 2, spot: "Pantai Glagah", date: "2025-11-10", amount: 1, price: 40000 },
-]);
 
 // === Title Halaman ===
 const pageTitle = computed(() =>
