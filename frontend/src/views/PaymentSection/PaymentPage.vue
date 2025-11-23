@@ -1,4 +1,15 @@
 <template>
+
+  <div v-if="showSuccessModal" class="modal-overlay" @click.self="closeModalSuccess">
+  <div class="success-content">
+    <h2>Pembayaran Berhasil 🎉</h2>
+    <p>Terima kasih, pesanan kamu sudah dikonfirmasi.</p>
+    <router-link :to="{path: `/profile`}">
+    <button class="btn-close" @click="closeModalSuccess">Lihat Tiket</button>
+    </router-link>
+  </div>
+</div>
+
   <div class="payment-page">
     <h2 class="title">Pembayaran Tiket Mancing</h2>
 
@@ -198,6 +209,19 @@ const lanjutkanPembayaran = () => {
   if (selectedMethod.value === "BCA") showBCAModal.value = true;
   if (selectedMethod.value === "Mandiri") showMandiriModal.value = true;
   if (selectedMethod.value === "Dana") showDanaModal.value = true;
+
+  setTimeout( async () => {
+    closeModal();
+    showSuccessModal.value = true;
+
+    try{
+      const api = import.meta.env.VITE_API_URL;
+      await axios.put(`${api}/api/bookings/${route.params.bookingId}/status`);
+      console.log("berhasil");
+    }catch(err){
+      console.error("gaga", err);
+    }
+  }, 5000);
 };
 
 const closeModal = () => {
@@ -220,10 +244,32 @@ const formatTanggal = (tgl) => {
     year: "numeric"
   });
 };
+ 
+const showSuccessModal =  ref(false);
+const closeModalSuccess = () => {
+  showSuccessModal.value = false;
+};
+
+
 </script>
 
 
 <style scoped>
+
+.success-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+.success-content h2 {
+  color: #28a745;
+  margin-bottom: 10px;
+}
 
 .btn-back{
  width: 100%;
