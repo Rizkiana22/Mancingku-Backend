@@ -51,7 +51,7 @@
     </div>
 
     <div class="location-buttons">
-      <button class="btn-location">📡 Lokasimu saat ini</button>
+      <button class="btn-location" @click="getLocation">📡 Lokasimu saat ini</button>
     </div>
   </div>
 </template>
@@ -62,7 +62,7 @@ import { ref } from 'vue'
 defineProps({
   modelValue: String
 })
-const emit = defineEmits(["update:modelValue", "apply-filter", "reset-filter"])
+const emit = defineEmits(["update:modelValue", "apply-filter", "reset-filter", "search-location"])
 
 const minPrice = ref(null)
 const maxPrice = ref(null)
@@ -76,6 +76,24 @@ const resetFilter = () => {
   showFilter.value = false
   emit("reset-filter")
 }
+
+const getLocation = () => {
+  if (!navigator.geolocation) {
+    alert("Browser tidak mendukung GPS");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      emit("search-location", { lat, lon });
+    },
+    () => {
+      alert("Gagal mendapatkan lokasi. Pastikan GPS diizinkan.");
+    }
+  );
+};
 
 </script>
 
