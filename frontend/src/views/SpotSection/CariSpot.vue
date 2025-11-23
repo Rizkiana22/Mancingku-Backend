@@ -2,7 +2,7 @@
   <main class="spot-page">
     <section class="search-section">
       <h1>Cari Spot Pemancingan</h1>
-      <SearchBar v-model="search" @apply-filter="setFilter" />
+      <SearchBar v-model="search" @apply-filter="setFilter" @reset-filter="resetFilter"/>
     </section>
 
     <section class="spot-list">
@@ -32,6 +32,14 @@ const filter = ref({
 
 const setFilter = (f) => {
   filter.value = f
+}
+
+const resetFilter = () => {
+  filter.value = {
+    minPrice: null,
+    maxPrice: null,
+    rating: 0
+  }
 }
 
 onMounted(async () => {

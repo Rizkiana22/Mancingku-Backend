@@ -38,10 +38,15 @@
         </div>
 
         <p>Penilaian: {{ rating }}</p>
-        <button class="btn-apply" @click="$emit('apply-filter', { minPrice, maxPrice, rating })">
-          Terapkan
-        </button>
+
+        <div class="btn-row">
+          <button class="btn-apply" @click="$emit('apply-filter', { minPrice, maxPrice, rating })">
+            Terapkan
+          </button>
+          <button class="btn-reset" @click="resetFilter">Reset</button>
         </div>
+      </div>
+        
 
     </div>
 
@@ -57,12 +62,21 @@ import { ref } from 'vue'
 defineProps({
   modelValue: String
 })
-defineEmits(["update:modelValue", "apply-filter"])
+const emit = defineEmits(["update:modelValue", "apply-filter", "reset-filter"])
 
 const minPrice = ref(null)
 const maxPrice = ref(null)
-const showFilter = ref(false)
 const rating = ref(0)
+const showFilter = ref(false)
+
+const resetFilter = () => {
+  minPrice.value = null
+  maxPrice.value = null
+  rating.value = 0        // ⬅ rating kembali ke 0
+  showFilter.value = false
+  emit("reset-filter")
+}
+
 </script>
 
 <style scoped>
@@ -207,19 +221,28 @@ const rating = ref(0)
   font-size: 1.2rem;
 }
 
-.btn-apply {
+.btn-row {
+  display: flex;
+  justify-content: space-between; 
+  gap: 10px; 
+  margin-top: 15px;
+}
+
+.btn-apply,
+.btn-reset {
+  flex: 1;
   background: #f89b2a;
   border: none;
   color: white;
   padding: 8px 20px;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 15px;
   font-weight: bold;
+}
 
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.btn-apply:hover,
+.btn-reset:hover {
+  background: #b8731f;
 }
 
 @media (max-width: 768px) {
@@ -260,6 +283,10 @@ const rating = ref(0)
 }
 
 .btn-apply {
+  width: 100%;
+}
+
+.btn-reset {
   width: 100%;
 }
 }
