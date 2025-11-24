@@ -12,6 +12,8 @@ import DetailSpot from '@/views/SpotSection/DetailSpot.vue'
 import BookingPage from '@/views/BookingSection/BookingPage.vue'
 import PaymentPage from '@/views/PaymentSection/PaymentPage.vue'
 import AddReview from '@/views/SpotSection/AddReview.vue'
+import Admin from '@/views/Admin/SpotAdmin.vue'
+
 
 const routes = [
   { path: '/', name: 'Indeks', component: Indeks },
@@ -25,6 +27,7 @@ const routes = [
   { path: '/signIn', name: 'signIn', component: Signin, meta: { title: 'Masuk | Mancingku' } },
   { path: '/signUp', name: 'signUp', component: signUp, meta: { title: 'Daftar | Mancingku' } },
   { path: '/Profile', name: 'Profile', component: Profile, meta: { title: 'Profil | Mancingku' } },
+  { path: '/Admin', name: 'Admin', component: Admin, meta: { title: 'Admin | Mancingku' } },
   { path: '/BookingPage/:spotId/:slug', name: 'BookingPage', component: BookingPage, meta: { title: 'Booking | Mancingku' } },
   { path: "/blog", name: "BlogList", component: () => import("@/views/BerandaSection/BlogList.vue" ) },
   { path: "/blog/:slug", name: "BlogDetail", component: () => import("@/views/BerandaSection/BlogDetail.vue" ) },

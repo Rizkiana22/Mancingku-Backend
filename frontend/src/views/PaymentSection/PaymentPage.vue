@@ -2,7 +2,7 @@
 
   <div v-if="showSuccessModal" class="modal-overlay" @click.self="closeModalSuccess">
   <div class="success-content">
-    <h2>Pembayaran Berhasil 🎉</h2>
+    <h2>Pembayaran Berhasil</h2>
     <p>Terima kasih, pesanan kamu sudah dikonfirmasi.</p>
     <router-link :to="{path: `/profile`}">
     <button class="btn-close" @click="closeModalSuccess">Lihat Tiket</button>

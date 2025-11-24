@@ -36,3 +36,4 @@ export const getSpotBySlug = (req, res) => {
     });
   });
 };
+

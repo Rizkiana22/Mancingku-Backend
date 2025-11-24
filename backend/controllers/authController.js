@@ -6,7 +6,7 @@ export const register = (req, res) => {
 
     if (!email || !password)
         return res.status(400).json({ message: "Email dan password wajib diisi" });
-
+    
     db.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
         if (err) return res.status(500).json({ message: "Error cek email" });
 
@@ -53,7 +53,8 @@ export const login = (req, res) => {
                 message: "Login berhasil",
                 user: {
                     id: user.id,
-                    email: user.email
+                    email: user.email,
+                    role: user.role
                 }
             });
         });

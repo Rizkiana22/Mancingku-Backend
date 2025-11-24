@@ -3,11 +3,13 @@
     <!-- Navbar hanya muncul kalau bukan di halaman payment -->
     <Navbar v-if="!hideNavbar" />
     <router-view />
+    <Footer v-if="showFooter" />
   </div>
 </template>
 
 <script setup>
 import Navbar from './components/Navbar.vue'
+import Footer from './components/footer.vue'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
@@ -17,6 +19,11 @@ const route = useRoute()
 // untuk halaman payment navbar di hide
 const hideNavbar = computed(() => {
   return route.path.includes('/payment')
+})
+
+// Footer cuma muncul di BERANDA & TENTANG
+const showFooter = computed(() => {
+  return route.path === '/Beranda' || route.path === '/tentang' || route.path === '/blog'
 })
 </script>
 

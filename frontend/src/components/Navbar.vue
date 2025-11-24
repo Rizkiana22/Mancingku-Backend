@@ -37,6 +37,12 @@
         <template v-else>
           <RouterLink to="/profile" @click="closeMenu"><button class="btn-profile">Profile</button></RouterLink>
           <button class="btn-logout" @click="logout">Logout</button>
+               <RouterLink
+            v-if="userRole === 'admin'"
+            to="/admin"
+            @click="closeMenu">
+            <button class="btn-admin">Admin</button>
+          </RouterLink>
         </template>
 
       </div>
@@ -52,6 +58,12 @@
       <template v-else>
         <RouterLink to="/profile"><button class="btn-profile">Profile</button></RouterLink>
         <button class="btn-logout" @click="logout">Logout</button>
+            <RouterLink
+            v-if="userRole === 'admin'"
+            to="/admin"
+            @click="closeMenu">
+            <button class="btn-admin">Admin</button>
+          </RouterLink>
       </template>
     </div>
 
@@ -69,10 +81,20 @@ const isOpen = ref(false);
 const isDropdownOpen = ref(false);
 const isLoggedIn = ref(false);
 
-function checkLogin(){
-  const user = localStorage.getItem("userId");
-  isLoggedIn.value = !!user;
+const userRole = ref(null);
+
+function checkLogin() {
+  const user = localStorage.getItem("user");
+  if (user) {
+    const userObj = JSON.parse(user);
+    isLoggedIn.value = true;
+    userRole.value = userObj.role; 
+  } else {
+    isLoggedIn.value = false;
+    userRole.value = null;
+  }
 }
+
 // Cek login dari localStorage
 onMounted(() => {
   checkLogin();
@@ -144,7 +166,7 @@ function closeMenu() {
 }
 
 .navbar.navbar-profile {
-  background-color: #014b69 !important; /* warna biru tua */
+  background-color: #014b69 !important; 
   transition: background-color 0.3s ease;
 }
 
@@ -222,7 +244,7 @@ function closeMenu() {
 }
 
 .btn-signIN,
-.btn-signUP, .btn-profile, .btn-logout {
+.btn-signUP, .btn-profile, .btn-logout, .btn-admin {
   padding: 0.6rem 1.2rem;
   font-weight: 600;
   font-size: clamp(14px, 1vw, 16px);
@@ -231,6 +253,12 @@ function closeMenu() {
   transition: all 0.1s;
 }
 
+
+.btn-admin{
+  background-color: #aa0000;
+  color: #fff;
+  border: 0px;
+}
 .btn-profile{
   background-color: #1b3c53;
   color: #fff;
@@ -253,7 +281,9 @@ function closeMenu() {
   color: #fff;
   border: 0px;
 }
-
+.btn-admin:hover {
+  background: #e28e00;
+}
 .btn-profile:hover{
   background: #e28e00;
 }
@@ -358,7 +388,7 @@ function closeMenu() {
   }
 
   .btn-signIN,
-  .btn-signUP, .btn-profile{
+  .btn-signUP, .btn-profile, .btn-admin{
     width: 100%;
     font-size: 16px;
     border: none;
@@ -371,7 +401,7 @@ function closeMenu() {
     border: none;
     border-radius: 6px;
     align-self: center;
-     background-color: #da9723;
+    background-color: #da9723;
     color: #fff;
 
   }

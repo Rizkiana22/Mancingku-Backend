@@ -33,7 +33,7 @@ const Spot = {
         WHERE sf.spot_id = ?
       `;
       db.query(sql, [spotId], callback);
-  }
-  };
+  },
+};
 
 export default Spot;
