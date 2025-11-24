@@ -14,8 +14,12 @@
       <button class="btn-filter" @click="showFilter = !showFilter">
         ⚙️ Filter
       </button>
-      
-      <div v-if="showFilter" class="filter-panel">
+
+      <!-- overlay klik luar -->
+      <div v-if="showFilter" class="overlay" @click="showFilter = false"></div>
+
+      <!-- panel filter -->
+      <div v-if="showFilter" class="filter-panel" @click.stop>
         <h3>Batas Harga</h3>
         <div class="price-range">
          <input type="number" placeholder="Min" v-model="minPrice" />
@@ -46,7 +50,6 @@
           <button class="btn-reset" @click="resetFilter">Reset</button>
         </div>
       </div>
-        
 
     </div>
 
@@ -72,7 +75,7 @@ const showFilter = ref(false)
 const resetFilter = () => {
   minPrice.value = null
   maxPrice.value = null
-  rating.value = 0        // ⬅ rating kembali ke 0
+  rating.value = 0
   showFilter.value = false
   emit("reset-filter")
 }
@@ -94,10 +97,15 @@ const getLocation = () => {
     }
   );
 };
-
 </script>
 
 <style scoped>
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.1);
+  z-index: 90;
+}
 .search-bar {
   display: flex;
   flex-direction: column;
