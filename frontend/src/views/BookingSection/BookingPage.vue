@@ -137,13 +137,22 @@ const pesanTiket = async () => {
   const selectedSession = sessions.value.find(
   s => Number(s.id) === Number(form.value.session_id)
   )
+
+  const alatHarga =
+    form.value.sewaAlat === "ya" && form.value.jenisAlat
+      ? daftarAlat.find(a => a.nama === form.value.jenisAlat)?.harga || 0
+      : 0;
+
+  const totalAlat = alatHarga * form.value.jumlahOrang;
+
   const payload = {
     user_id: Number(localStorage.getItem("userId")),
     spot_id: route.params.spotId,
     session_id: form.value.session_id,
     booking_date: form.value.tanggal,
     jumlah_orang: form.value.jumlahOrang,
-    total_amount: totalBiaya.value
+    total_amount: totalBiaya.value - totalAlat,
+    total_alat: totalAlat
   };
 
   try {

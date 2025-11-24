@@ -87,7 +87,7 @@
           </p>
 
           <p><strong>Jumlah:</strong> {{ selectedTicket.jumlah_orang }} tiket</p>
-          <p><strong>Harga:</strong> Rp {{ formatNumber(selectedTicket.total_amount) }}</p>
+          <p><strong>Harga:</strong> Rp {{ formatNumber(Number(selectedTicket.total_amount) + Number(selectedTicket.total_alat)) }}</p>
 
           <!-- Barcode -->
           <div class="barcode-wrapper">

@@ -132,7 +132,7 @@
       <div class="Dana-content">
         <h3>Pembayaran Melalui Dana</h3>
         <p>Total Pembayaran:</p>
-        <h3>Rp {{ formatNumber(total_amount) }}</h3>
+        <h3>Rp {{ formatNumber(total) }}</h3>
 
         <div class="No-box">
           <p>Nomor Dana:</p>
