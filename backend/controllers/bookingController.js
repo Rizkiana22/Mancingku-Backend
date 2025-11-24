@@ -33,3 +33,15 @@ export const updateStatus = (req, res) => {
   });
 };
 
+export const getByUserIdPaid = (req, res) => {
+  const userId = req.params.id;
+
+  Booking.getByUserIdPaid(userId, (err, results) => {
+    if (err) {
+      console.error("Error mengambil booking user:", err);
+      return res.status(500).json({ message: "Gagal mengambil booking user" });
+    }
+
+    res.json(results);
+  });
+};

@@ -9,7 +9,7 @@
     <div class="spot-info">
       <h1>{{ spot.name }}</h1>
 
-      <p><strong>Kapasitas:</strong> {{ spot.capacity }} kursi</p>
+      <p><strong>Kapasitas:</strong> {{ nextSession ? nextSession.capacity : '...' }} kursi</p>
       <p class="alamat">📍 {{ spot.address }}</p>
 
       <p class="rating">
@@ -63,6 +63,21 @@ onMounted(async () => {
     console.error("Gagal mengambil review:", err);
   }
 });
+
+const nextSession = ref(null)
+
+const loadNextSession = async () => {
+  try {
+    const res = await axios.get(`/api/sessions/${props.spot.id}/next-session`)
+    nextSession.value = res.data
+  } catch (err) {
+    console.error("Gagal memuat sesi:", err)
+  }
+}
+
+onMounted(() => {
+  loadNextSession()
+})
 </script>
 
 <style scoped>

@@ -70,6 +70,26 @@ const Booking = {
     `;
     db.query(query, [status, bookingId], callback);
   },
+
+  getByUserIdPaid: (userId, callback) => {
+    const query = `
+    SELECT
+      b.id, 
+      b.booking_date,
+      b.jumlah_orang,
+      b.total_amount,
+      b.status,
+      sp.name AS spot_name,
+      s.session_name,
+      s.start_time,
+      s.end_time
+    FROM bookings b
+    JOIN spots sp ON b.spot_id = sp.id
+    JOIN sessions s ON b.session_id = s.id
+    WHERE b.user_id = ? AND b.status = 'paid'
+    ORDER BY b.created_at DESC`;
+    db.query(query, [userId], callback);
+  }
 };
 
 export default Booking;

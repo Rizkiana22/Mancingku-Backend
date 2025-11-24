@@ -30,7 +30,7 @@
             @click="selectTicket(ticket)"
             class="ticket-item"
           >
-            • {{ ticket.spot }}
+            • {{ ticket.spot_name }}
           </li>
         </ul>
       </div>
@@ -80,14 +80,18 @@
       <!-- === DETAIL TIKET === -->
       <div v-else-if="activeMenu === 'tiket' && selectedTicket">
         <div class="ticket-detail">
-          <h3>{{ selectedTicket.spot }}</h3>
-          <p><strong>Tanggal:</strong> {{ selectedTicket.date }}</p>
-          <p><strong>Jumlah:</strong> {{ selectedTicket.amount }} tiket</p>
-          <p><strong>Harga:</strong> Rp {{ selectedTicket.price.toLocaleString() }}</p>
+          <h3>{{ selectedTicket.spot_name}}</h3>
+          <p><strong>Tanggal:</strong> {{formatTanggal( selectedTicket.booking_date )}}</p>
+          <p><strong>Sesi:</strong> {{ selectedTicket.session_name }} 
+           ({{ formatJam(selectedTicket.start_time) }} - {{ formatJam(selectedTicket.end_time) }})
+          </p>
+
+          <p><strong>Jumlah:</strong> {{ selectedTicket.jumlah_orang }} tiket</p>
+          <p><strong>Harga:</strong> Rp {{ formatNumber(selectedTicket.total_amount) }}</p>
 
           <!-- Barcode -->
           <div class="barcode-wrapper">
-            <img src="/src/assets/barcode.png" alt="Barcode Tiket" class="barcode-img" />
+           <img :src="qrS" alt="Barcode Tiket" class="barcode-img" />
           </div>
         </div>
       </div>
@@ -98,11 +102,13 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
+import QRcode from "qrcode";
+
 
 const activeMenu = ref("profil");
 const showTickets = ref(false);
 const selectedTicket = ref(null);
-
+const tickets  = ref([]);
 // === DATA USER ===
 const username = ref("");
 const name = ref("");    
@@ -127,6 +133,10 @@ onMounted(async () => {
 
     name.value = res.data.name || "";
     phone.value = res.data.phone || "";
+
+    //ambil tiket user
+   const resTickets = await axios.get(`${api}/api/bookings/user/${userObj.id}`);
+    tickets.value = resTickets.data;
   } catch (err) {
     console.error("Gagal mengambil data user:", err);
   }
@@ -148,7 +158,22 @@ function toggleTicketMenu() {
 function selectTicket(ticket) {
   activeMenu.value = "tiket";
   selectedTicket.value = ticket;
+  generateQr(ticket);
 }
+
+const qrS= ref("");
+
+const generateQr = (ticket) => {
+  const api = import.meta.env.VITE_API_URL;
+  const data = `${api}/api/bookings/${ticket.id}`;
+
+  QRcode.toDataURL(data)
+  .then(url => {
+    qrS.value = url;
+  })
+  .catch(err => console.error(err));
+};
+
 
 async function saveProfile() {
   const storedUser = localStorage.getItem("user");
@@ -168,6 +193,32 @@ async function saveProfile() {
     console.error(err);
   }
 }
+
+const formatTanggal = (tgl) => {
+  const date = new Date(tgl);
+  return date.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+};
+
+const formatNumber = (num) => {
+  if (!num) return "0";
+  return Number(num).toLocaleString("id-ID", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+};
+
+const formatJam = (jam) => {
+  if (!jam) return "-";
+
+  // Misal input "13:00:00"
+  const [h, m] = jam.split(":");
+  return `${h}:${m}`;
+};
+
 </script>
 
 
