@@ -56,7 +56,33 @@ const Session = {
                 resolve(results[0]);
             });
         });
-    }
+    },
+
+    getBySpotAndDate: (spotId, date) => {
+        return new Promise((resolve, reject) => {
+            const query = `
+                SELECT 
+                    s.*,
+                    (
+                        s.capacity - COALESCE(SUM(b.jumlah_orang), 0)
+                    ) AS seats_left
+                FROM sessions s
+                LEFT JOIN bookings b ON 
+                    b.session_id = s.id 
+                    AND b.status = 'paid'
+                    AND b.booking_date = ?
+                WHERE s.spot_id = ?
+                GROUP BY s.id
+                ORDER BY s.start_time ASC;
+            `;
+
+            db.query(query, [date, spotId], (err, results) => {
+                if (err) return reject(err);
+                resolve(results);
+            });
+        });
+    },
+
 };
 
 export default Session;

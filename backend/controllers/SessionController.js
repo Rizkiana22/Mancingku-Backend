@@ -12,6 +12,21 @@ export const getSessionBySpot = async (req, res) => {
     }
 };
 
+export const getSessionBySpotAndDate = async (req, res) => {
+    try {
+        const spotId = req.params.spotId;
+        const date = req.query.date; // read ?date=
+
+        if (!date) return res.status(400).json({ message: "Tanggal wajib dikirim" });
+
+        const sessions = await Session.getBySpotAndDate(spotId, date);
+        res.json(sessions);
+    } catch (err) {
+        console.error("ERROR:", err);
+        res.status(500).json({ message: "Error" });
+    }
+};
+
 // AMBIL SESI TERDEKAT / BERIKUTNYA
 export const getNextSession = async (req, res) => {
     try {

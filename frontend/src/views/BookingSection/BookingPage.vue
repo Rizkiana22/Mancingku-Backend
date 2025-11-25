@@ -78,7 +78,7 @@
 
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
@@ -95,6 +95,18 @@ const form = ref({
 
 const sessions = ref([]);
 
+watch(() => form.value.tanggal, async (newVal) => {
+  if (!newVal) return;
+  try {
+    const res = await axios.get(
+      `/api/sessions/${route.params.spotId}/sessions-by-date?date=${newVal}`
+    );
+    sessions.value = res.data;
+  } catch (err) {
+    console.error("Gagal load sesi berdasarkan tanggal", err);
+  }
+});
+
 const loadSessions = async () => {
   try {
    const res = await axios.get(`/api/sessions/${route.params.spotId}/sessions`);
@@ -105,7 +117,9 @@ const loadSessions = async () => {
 };
 
 
-onMounted(loadSessions);
+onMounted(() => {
+  if (form.value.tanggal) loadSessions();
+});
 
 const daftarAlat = [
   { nama: "Joran & Reel Spinning", harga: 15000 },
