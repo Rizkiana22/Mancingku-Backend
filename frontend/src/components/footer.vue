@@ -23,7 +23,7 @@
       <!-- Contact -->
       <div class="footer-section">
         <h3 class="title">Kontak</h3>
-        <p>Email: antoncahyanto@gmail.com</p>
+        <p>Email: mancingku@gmail.com</p>
         <p>WhatsApp: 0892-1231-4213</p>
       </div>
     </div>
