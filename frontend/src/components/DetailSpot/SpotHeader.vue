@@ -10,7 +10,14 @@
       <h1>{{ spot.name }}</h1>
 
       <p><strong>Kapasitas:</strong> {{ nextSession ? nextSession.capacity : '...' }} kursi</p>
-      <p class="alamat">📍 {{ spot.address }}</p>
+      <p class="alamat">📍 {{ spot.address }}
+       <a 
+    :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.name)}`" 
+    target="_blank"
+  >
+    (lihat maps)
+        </a>
+      </p>
 
       <p class="rating">
         ⭐ {{ spot.rating ?? 0 }} ({{ reviews.length }} ulasan)
