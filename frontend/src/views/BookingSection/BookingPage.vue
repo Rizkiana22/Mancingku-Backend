@@ -18,7 +18,7 @@
       </div>
 
       <!-- PILIH SESI (pengganti jam) -->
-      <div class="form-group">
+      <div class="form-group" v-if="form.tanggal">
         <label>Pilih Sesi</label>
 
         <div v-if="sessions.length === 0">Memuat sesi...</div>
